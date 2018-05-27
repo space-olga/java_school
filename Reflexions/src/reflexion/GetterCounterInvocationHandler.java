@@ -3,7 +3,6 @@ package reflexion;
 import java.util.HashMap;
 
 public class GetterCounterInvocationHandler implements java.lang.reflect.InvocationHandler {
-    private HashMap<Class, Object> hashMapCache = new HashMap<Class, Object>();
     private Object object;
 
     public GetterCounterInvocationHandler(Object obj) {
@@ -16,15 +15,14 @@ public class GetterCounterInvocationHandler implements java.lang.reflect.Invocat
         try {
             Class clazzArgs = (Class) args[0];
 
-            if (hashMapCache.containsKey(clazzArgs)) {
-                System.out.println("Cash value");
-                return hashMapCache.get(clazzArgs);
+            if (IGetterCounter.hashMapCache.containsKey(clazzArgs)) {
+                System.out.println(String.format("Cash value of %s", clazzArgs.getName()));
+                return IGetterCounter.hashMapCache.get(clazzArgs);
             }
 
             Object count = method.invoke(object, args);
-            hashMapCache.put(clazzArgs, count);
+            IGetterCounter.hashMapCache.put(clazzArgs, count);
 
-            System.out.println(String.format("Method invoke :%s, value = %d", method.getName(), count));
             return count;
 
         } catch (Exception ex) {
