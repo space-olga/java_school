@@ -33,7 +33,6 @@ public class Streams<T> {
     // toMap - принимает 2 лямбды для создания мапы, в одной указывается, что использовать в качестве ключа,
     // в другой, что в качестве значения
     public Map<T, T> toMap(Function<? super T, ? extends T> mapperKey, Function<? super T, ? extends T> mapperValue) {
-        Map<T, T> map = this.stream.collect(Collectors.toMap(mapperKey, mapperValue));
-        return map;
+        return this.stream.collect(Collectors.toMap(mapperKey, mapperValue));
     }
 }

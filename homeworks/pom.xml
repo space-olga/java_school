@@ -11,7 +11,7 @@
     <modules>
         <module>serialization_proxy</module>
         <module>stream_api</module>
+        <module>collections</module>
+        <module>threads</module>
     </modules>
-
-
 </project>

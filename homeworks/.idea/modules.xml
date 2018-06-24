@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/serialization_proxy/serialization_proxy.iml" filepath="$PROJECT_DIR$/serialization_proxy/serialization_proxy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/stream_api/stream_api.iml" filepath="$PROJECT_DIR$/stream_api/stream_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/collections/collections.iml" filepath="$PROJECT_DIR$/collections/collections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/threads/threads.iml" filepath="$PROJECT_DIR$/threads/threads.iml" />
     </modules>
   </component>
 </project>

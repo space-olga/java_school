@@ -1,8 +1,6 @@
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +13,7 @@ public class Main {
 
         Streams streamApples = Streams.of(listApples)
                                       .filter((Predicate<Apple>)apple -> "red".equals(apple.getColor()))
-                                      .transform((Function<Apple, Apple>)apple-> new Apple(apple.sortName, apple.color, apple.weigth, apple.price - 20));
+                                      .transform((Function<Apple, Apple>) apple-> new Apple(apple.sortName, apple.color, apple.weigth, apple.price - 20));
         System.out.println("StreamApi -> red apples");
         streamApples.stream.forEach(System.out::println);
 
