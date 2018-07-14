@@ -13,5 +13,8 @@
         <module>stream_api</module>
         <module>collections</module>
         <module>threads</module>
+        <module>sockets</module>
+        <module>good_code</module>
+        <module>good_code</module>
     </modules>
 </project>
