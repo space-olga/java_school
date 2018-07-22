@@ -1,0 +1,73 @@
+drop table if exists USERS.USER cascade;
+drop table if exists USERS.ITEM cascade;
+drop table if exists USERS."ORDER" cascade;
+drop sequence if exists USERS.SeqOrderId;
+
+create schema if not exists USERS;
+
+-- table USER
+create table if not exists USERS.USER(id int auto_increment primary key, name varchar(25) not null, age int not null, constraint name_unique unique(name));
+
+-- table ITEM
+create table if not exists USERS.ITEM(id int auto_increment primary key, name varchar(100) not null, price double not null);
+
+-- table ORDER
+create table if not exists USERS."ORDER"(id int auto_increment primary key, orderId int not null, dateOrder date not null, userId int not null , itemId int not null, quantity int not null,
+foreign key (userId) references USERS.USER(id), foreign key (itemId) references USERS.ITEM(id));
+
+-- sequence for orderIds
+create sequence if not exists USERS.SeqOrderId start with 1 increment by 1;
+
+insert into USERS.USER(name, age) values ('olga', 35);
+insert into USERS.USER(name, age) values ('vlad', 42);
+insert into USERS.USER(name, age) values ('tata', 53);
+insert into USERS.USER(name, age) values ('sergey', 25);
+insert into USERS.USER(name, age) values ('vasiliy1991', 27);
+commit;
+
+insert into USERS.ITEM(name, price) values ('Электронная книга ONYX', 8490.50);
+insert into USERS.ITEM(name, price) values('Внешний аккумулятор Xiaomi Mi Power', 2979);
+insert into USERS.ITEM(name, price) values('Apple iPhone XP', 83590);
+insert into USERS.ITEM(name, price) values('Держатель для смартфона', 619);
+insert into USERS.ITEM(name, price) values('Фотобатарейка литиевая', 419);
+insert into USERS.ITEM(name, price) values('Беспроводная колонка DEnn DBS 151', 1999);
+insert into USERS.ITEM(name, price) values('Флеш накопитель Transcend 64 Gb', 1549);
+insert into USERS.ITEM(name, price) values('Наушники JBL T110Вт', 1990);
+commit;
+
+-- olga's order
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.nextval, '2018-07-21', (select us.id from USERS.USER as us where us.name='olga'), (select ui.id from USERS.ITEM as ui where ui.name like 'Электронная книга%'), 1);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, '2018-07-21', (select us.id from USERS.USER as us where us.name='olga'), (select ui.id from USERS.ITEM as ui where ui.name like 'Флеш накопитель%'), 3);
+
+-- vlad's order
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.nextval, DATEADD('DAY', 1, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='vlad'), 3, 1);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, DATEADD('DAY', 1, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='vlad'), 4, 1);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, DATEADD('DAY', 1, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='vlad'), 6, 1);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, DATEADD('DAY', 1, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='vlad'), 7, 1);
+
+-- tata's order
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.nextval, DATEADD('DAY', 2, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='tata'), 2, 1);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, DATEADD('DAY', 2, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='tata'), 5, 2);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, DATEADD('DAY', 2, DATE '2018-07-21'), (select us.id from USERS.USER as us where us.name='tata'), 6, 1);
+
+-- vasiliy1991's order
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.nextval, CURRENT_DATE(), (select us.id from USERS.USER as us where us.name='vasiliy1991'), 5, 1);
+insert into USERS."ORDER"(orderId, dateOrder, userId , itemId, quantity) values (USERS.SeqOrderId.currval, CURRENT_DATE(), (select us.id from USERS.USER as us where us.name='vasiliy1991'), 7, 1);
+commit;
+
+-- view
+create or replace view USERS.USROrders_view as
+select  usr.id, usr.name as user_name, usr.age, ord.orderId, ord.dateOrder, ui.name as item_name, ui.price, ord.quantity
+from USERS.USER as usr left join USERS."ORDER" as ord on usr.id=ord.userId left join USERS.ITEM as ui on ord.itemId=ui.id order by usr.id;
+
+select * from USERS.USROrders_view;
+
+-- select order's facts
+select  usr.id as userId, usr.name as user_name, ord.orderId, ord.dateOrder
+from USERS.USER as usr, USERS."ORDER" as ord where usr.id=ord.userId and ord.dateOrder >= '2018-07-22';
+
+-- select items's on date
+select  ui.id as itemId, ui.name as item_name, ui.price, ord.quantity, usr.name as user_name, ord.orderId, ord.dateOrder
+from USERS.USER as usr, USERS."ORDER" as ord, USERS.ITEM as ui where usr.id=ord.userId and ord.itemId=ui.id and ord.dateOrder <= '2018-07-23' and ord.dateOrder >='2018-07-22' order by ui.id;
+
+select * from USERS.USRORDERS_VIEW as usrv where usrv.dateOrder <= '2018-07-23' and usrv.dateOrder >='2018-07-22';
