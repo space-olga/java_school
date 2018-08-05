@@ -11,6 +11,7 @@
         <module name="good_code" />
         <module name="serialization_proxy" />
         <module name="sockets" />
+        <module name="spring_jdbc" />
         <module name="stream_api" />
         <module name="threads" />
       </profile>
