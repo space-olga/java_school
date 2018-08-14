@@ -17,6 +17,8 @@
         <module>good_code</module>
         <module>good_code</module>
         <module>spring_jdbc</module>
+        <module>spring_hibernate</module>
+        <module>spring_hibernate_jpa</module>
     </modules>
 
     <build>

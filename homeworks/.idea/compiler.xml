@@ -11,6 +11,7 @@
         <module name="good_code" />
         <module name="serialization_proxy" />
         <module name="sockets" />
+        <module name="spring_hibernate_jpa" />
         <module name="spring_jdbc" />
         <module name="stream_api" />
         <module name="threads" />
@@ -18,6 +19,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
       <module name="good_code" target="8" />
+      <module name="spring_hibernate" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
