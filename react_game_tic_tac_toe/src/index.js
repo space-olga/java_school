@@ -19,6 +19,13 @@ class Board extends React.Component {
         };
     }
 
+    updateGame() {
+        this.setState({
+            squares: Array(9).fill(null),
+            xIsNext: true,
+        });
+    }
+
     handleClick(i) {
         const squares = this.state.squares.slice();
         if (calculateWinner(squares) || squares[i]) {
@@ -40,6 +47,20 @@ class Board extends React.Component {
         );
     }
 
+    /*renderBoard() {
+        let resultDiv = '';
+        let currSquareNum = 0;
+        for (let i = 0; i < this.state.squares.length / 3; i++) {
+            resultDiv += '<div className="board-row">';
+            for (let j = 0; j < this.state.squares.length / 3; j++) {
+                resultDiv += (this.renderSquare(i + currSquareNum)).toString();
+                currSquareNum = j;
+            }
+            resultDiv += '</div>';
+        }
+        return resultDiv;
+    }*/
+
     render() {
         const winner = calculateWinner(this.state.squares);
         let status;
@@ -53,22 +74,24 @@ class Board extends React.Component {
             <div>
                 <div className="status">{status}</div>
                 <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
+                     {this.renderSquare(0)}
+                     {this.renderSquare(1)}
+                     {this.renderSquare(2)}
                 </div>
                 <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
+                     {this.renderSquare(3)}
+                     {this.renderSquare(4)}
+                     {this.renderSquare(5)}
                 </div>
                 <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
+                     {this.renderSquare(6)}
+                     {this.renderSquare(7)}
+                     {this.renderSquare(8)}
                 </div>
+                <button className="game-update" onClick={() => this.updateGame()}>Перезапуск игры</button>
             </div>
         );
+        //{this.renderBoard()}
     }
 }
 
@@ -83,6 +106,7 @@ class Game extends React.Component {
                     <div>{/*status*/}</div>
                     <ol>{/* TODO */}</ol>
                 </div>
+
             </div>
         );
     }
