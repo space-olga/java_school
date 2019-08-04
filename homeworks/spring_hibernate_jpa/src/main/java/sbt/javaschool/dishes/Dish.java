@@ -17,7 +17,6 @@ public class Dish {
     String dishName;
     @Column(name="DISHDESCR", nullable = true, insertable = true, updatable = true, length = 200)
     String dishDescr;
-    // 88888888888888888888888888888
 
     @OneToMany(mappedBy = "dish", cascade=CascadeType.ALL, orphanRemoval = true)
     Set<DishProduct> dishProducts = new HashSet<>();
