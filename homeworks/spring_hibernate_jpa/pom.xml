@@ -12,7 +12,7 @@
     <artifactId>spring_hibernate_jpa</artifactId>
 
     <properties>
-        <hibernate-version>5.0.1.Final</hibernate-version>
+        <hibernate-version>5.3.20.Final</hibernate-version>
     </properties>
     <dependencies>
         <dependency>
